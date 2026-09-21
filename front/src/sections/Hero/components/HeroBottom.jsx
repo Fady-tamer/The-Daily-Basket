@@ -37,7 +37,7 @@ const features = [
 
 const HeroBottom = () => {
   return (
-    <div className="p-4 lg:p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 rounded-2xl bg-white shadow-lg border border-gray-100">
+    <div className="p-4 lg:p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 rounded-2xl bg-white border border-gray-100">
       {features.map(({ icon, title, description }) => (
         <div
           key={title}

@@ -119,8 +119,6 @@ const UserInfo = () => {
               <option value="" disabled>
                 Select Country
               </option>
-              <option value="us">United States</option>
-              <option value="uk">United Kingdom</option>
               <option value="eg">Egypt</option>
             </Field>
             <ErrorMessage
@@ -147,8 +145,6 @@ const UserInfo = () => {
                 Select State
               </option>
               <option value="cairo">Cairo</option>
-              <option value="ny">New York</option>
-              <option value="tx">Texas</option>
             </Field>
             <ErrorMessage
               name="state"

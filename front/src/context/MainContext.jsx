@@ -28,6 +28,9 @@ const MainContext = ({ children }) => {
   const [wishList, setWishList] = useState(
     JSON.parse(localStorage.getItem("wishListItems")) || [],
   );
+  const [orders, setOrders] = useState(
+    JSON.parse(localStorage.getItem("orders")) || [],
+  );
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -81,6 +84,11 @@ const MainContext = ({ children }) => {
     setCart(cartItems);
   };
 
+  const saveOrders = (orders) => {
+    localStorage.setItem("orders", JSON.stringify(orders));
+    setOrders(orders);
+  };
+
   const saveWishListId = (WishListId) => {
     localStorage.setItem("wishListId", JSON.stringify(WishListId));
     setWishList(WishListId);
@@ -98,6 +106,7 @@ const MainContext = ({ children }) => {
     localStorage.removeItem("cartItems");
     localStorage.removeItem("wishListId");
     localStorage.removeItem("wishListItems");
+    localStorage.removeItem("orders");
     setToken(null);
   };
 
@@ -118,6 +127,7 @@ const MainContext = ({ children }) => {
     isInitialLoading,
     cart,
     wishList,
+    orders,
     setSelectedCategory,
     setIsInitialLoading,
     saveToken,
@@ -126,6 +136,7 @@ const MainContext = ({ children }) => {
     saveCartItems,
     saveWishListId,
     saveWishListItems,
+    saveOrders,
     logoutFn,
   };
 

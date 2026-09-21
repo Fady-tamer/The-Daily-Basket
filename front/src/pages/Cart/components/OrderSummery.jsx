@@ -7,16 +7,47 @@ import { mainStore } from "../../../context/MainContext";
 const OrderSummery = () => {
   const { cart } = useContext(mainStore);
 
-  const [SubTotal, setSubTotal] = useState(0);
-  const shippingPrice = 0;
+  const [TotalSale, setTotalSale] = useState(0);
+  const [subTotal, setSubTotal] = useState(0);
+  const [shippingPrice, setShippingPrice] = useState(0);
+  const [finalTotal, setFinalTotal] = useState(0);
 
   const isCartEmpty = !cart || cart.length === 0 ? true : false;
 
-  const subTotal = isCartEmpty
-    ? 0
-    : cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const calcTotal = () => {
+    let calculatedSale = 0;
+    let calculatedSubTotal = 0;
+    let calculatedFinalTotal = 0;
 
-  const finalTotal = subTotal + shippingPrice;
+    cart.forEach((item) => {
+      const totalP = Number(item.price) * Number(item.quantity);
+      if (item.sale > 0) {
+        const discount = totalP * (item.sale / 100);
+        calculatedSale += discount;
+      }
+    });
+
+    cart.forEach((item) => {
+      const itemTotal = Number(item.price) * Number(item.quantity);
+      calculatedSubTotal += itemTotal;
+    });
+
+    calculatedFinalTotal = calculatedSubTotal - calculatedSale + shippingPrice;
+
+    setTotalSale(calculatedSale.toFixed(2));
+    setSubTotal(calculatedSubTotal.toFixed(2));
+    setFinalTotal(calculatedFinalTotal.toFixed(2));
+  };
+
+  useEffect(() => {
+    if (!isCartEmpty) {
+      calcTotal();
+    } else {
+      setTotalSale(0);
+      setSubTotal(0);
+      setFinalTotal(0);
+    }
+  }, [cart, shippingPrice, isCartEmpty]);
 
   return (
     <div className="w-full lg:w-80 shrink-0 border border-gray-200 rounded-2xl p-6 bg-white shadow-sm font-sans">
@@ -28,11 +59,25 @@ const OrderSummery = () => {
         <span className="font-bold text-gray-900 text-sm">${subTotal}</span>
       </div>
 
+      {/* totalSale */}
+      {TotalSale > 0 ? (
+        <div className="flex justify-between items-center py-3 border-b border-gray-100">
+          <span className="text-gray-500 text-sm">Sale:</span>
+          <span className="font-bold text-red-500 text-sm">
+            ${Number(TotalSale).toFixed(2)}
+          </span>
+        </div>
+      ) : null}
+
       {/* Shipping */}
       <div className="flex justify-between items-center py-3 border-b border-gray-100">
         <span className="text-gray-500 text-sm">Shipping:</span>
         <span className="font-bold text-gray-900 text-sm">
-          {shippingPrice == 0 ? "Free" : shippingPrice}
+          {shippingPrice == 0 ? (
+            <p className="text-green-500">Free</p>
+          ) : (
+            shippingPrice
+          )}
         </span>
       </div>
 

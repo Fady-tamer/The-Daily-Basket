@@ -4,16 +4,16 @@ import { Link } from "react-router";
 import { FaArrowRight } from "react-icons/fa6";
 
 // images
-import heroside from "../../../assets/hero-side2.jpg";
+import heroSide from "../../../assets/hero-side2.jpg";
 
 const HeroSideBottom = () => {
   return (
-    <div className="relative overflow-hidden flex rounded-2xl shadow-lg min-h-55">
+    <div className="relative overflow-hidden flex rounded-2xl min-h-55">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url(${heroside})`,
+          backgroundImage: `url(${heroSide})`,
         }}
       />
 

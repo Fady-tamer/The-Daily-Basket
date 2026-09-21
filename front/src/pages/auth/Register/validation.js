@@ -10,21 +10,11 @@ export const validation = yup.object({
     .trim()
     .min(2, "First name must be at least 2 characters")
     .required("First name is required"),
-  lastname: yup
-    .string()
-    .trim()
-    .min(2, "Last name must be at least 2 characters")
-    .required("Last name is required"),
   email: yup
     .string()
     .trim()
     .matches(emailRules, "Please enter a valid email address")
     .required("Email is required"),
-  phone: yup
-    .string()
-    .trim()
-    .matches(/^[0-9+\s()-]+$/, "Invalid phone number format")
-    .required("Phone number is required"),
   password: yup
     .string()
     .matches(

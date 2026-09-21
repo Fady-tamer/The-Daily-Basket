@@ -22,8 +22,6 @@ const Hero = () => {
 
       {/* Features Bar */}
       <HeroBottom />
-
-      <div className="my-4 border-2 border-green-500 rounded-2xl" />
     </section>
   );
 };

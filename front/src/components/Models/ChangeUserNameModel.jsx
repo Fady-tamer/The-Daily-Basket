@@ -15,6 +15,10 @@ const changeUserNameValidationSchema = Yup.object({
     .trim()
     .min(3, "Username must be at least 3 characters")
     .required("Username is required"),
+  lastname: Yup.string()
+    .trim()
+    .min(3, "LastName must be at least 3 characters")
+    .required("LastName is required"),
 });
 
 const ChangeFirstNameModel = ({ setIsChangingUserName }) => {
@@ -26,7 +30,7 @@ const ChangeFirstNameModel = ({ setIsChangingUserName }) => {
     try {
       const res = await axios.put(
         `${BASE_URL}${endPoint}${userData.id}`,
-        { username: values.username.trim() },
+        { username: values.username.trim(), lastname: values.lastname.trim() },
         { headers: { Authorization: `Bearer ${token}` } },
       );
 
@@ -36,6 +40,7 @@ const ChangeFirstNameModel = ({ setIsChangingUserName }) => {
         lastname: res.data?.lastname,
         email: res.data?.email,
         phone: res.data?.phone,
+        address: res.data?.address
       };
 
       saveUserData(data);
@@ -74,7 +79,10 @@ const ChangeFirstNameModel = ({ setIsChangingUserName }) => {
         </h3>
 
         <Formik
-          initialValues={{ username: userData?.username || "" }}
+          initialValues={{
+            username: userData?.username || "",
+            lastname: userData?.lastname || "",
+          }}
           validationSchema={changeUserNameValidationSchema}
           enableReinitialize
           onSubmit={changeUserName}
@@ -93,6 +101,23 @@ const ChangeFirstNameModel = ({ setIsChangingUserName }) => {
                 />
                 <ErrorMessage
                   name="username"
+                  component="p"
+                  className="text-xs text-red-500 mt-1"
+                />
+              </div>
+
+              <div>
+                <Field
+                  name="lastname"
+                  placeholder="Enter new lastname"
+                  className={`w-full px-4 py-2.5 rounded-lg border bg-gray-50 text-gray-900 focus:outline-none focus:ring-2 ${
+                    touched.lastname && errors.lastname
+                      ? "border-red-500 focus:ring-red-400"
+                      : "border-gray-300 focus:ring-green-500"
+                  }`}
+                />
+                <ErrorMessage
+                  name="lastname"
                   component="p"
                   className="text-xs text-red-500 mt-1"
                 />

@@ -58,7 +58,7 @@ const ProductModel = ({ product, setOpenModel }) => {
         updatedCart = [...updatedCart, newCartItem];
       }
 
-      const cartId = localStorage.getItem("cartId");
+      const cartId = JSON.parse(localStorage.getItem("cartId"));
 
       saveCartItems(updatedCart);
 

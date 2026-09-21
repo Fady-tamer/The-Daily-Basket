@@ -4,14 +4,14 @@ import { Link } from "react-router";
 import { FaArrowRight } from "react-icons/fa6";
 
 // images
-import heroside from "../../../assets/hero-side1.jpg";
+import heroSide from "../../../assets/hero-side1.jpg";
 
 const HeroSideTop = () => {
   return (
     <div
-      className="grow p-6 md:p-8 flex flex-col justify-center gap-2 bg-cover bg-center bg-no-repeat rounded-2xl shadow-lg min-h-55 relative overflow-hidden"
+      className="grow p-6 md:p-8 flex flex-col justify-center gap-2 bg-cover bg-center bg-no-repeat rounded-2xl min-h-55 relative overflow-hidden"
       style={{
-        backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.85), rgba(255,255,255,0.2)), url(${heroside})`,
+        backgroundImage: `linear-gradient(to right, rgba(255,255,255,0.85), rgba(255,255,255,0.2)), url(${heroSide})`,
       }}
     >
       <span className="font-semibold text-xs uppercase tracking-wider text-gray-700">

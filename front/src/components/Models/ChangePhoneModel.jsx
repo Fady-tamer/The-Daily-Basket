@@ -69,9 +69,7 @@ const ChangePhoneModel = ({ setIsChangingPhone }) => {
           ✕
         </button>
 
-        <h3 className="text-xl font-bold text-gray-800 mb-4">
-          Change Username
-        </h3>
+        <h3 className="text-xl font-bold text-gray-800 mb-4">Change Phone</h3>
 
         <Formik
           initialValues={{ phone: userData?.phone || "" }}

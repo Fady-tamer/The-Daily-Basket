@@ -20,8 +20,6 @@ const ProductCart = ({ product }) => {
 
   const {
     BASE_URL,
-    END_POINT,
-    userData,
     cartEndPoint,
     wishListEndPoint,
     token,

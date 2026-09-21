@@ -74,11 +74,11 @@
       "type": "string",
       "required": false
     },
-    "order": {
+    "orders": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::order.order",
-      "inversedBy": "user"
+      "mappedBy": "user"
     },
     "wishlist": {
       "type": "relation",
@@ -91,6 +91,9 @@
       "relation": "oneToOne",
       "target": "api::cart.cart",
       "inversedBy": "user"
+    },
+    "address": {
+      "type": "string"
     }
   }
 }

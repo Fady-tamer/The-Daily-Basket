@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Field, useFormikContext } from "formik";
 
 // context
@@ -8,14 +8,47 @@ const PaymentMethod = () => {
   const { cart } = useContext(mainStore);
   const { isSubmitting } = useFormikContext();
 
-  const shippingPrice = 0;
+  const [TotalSale, setTotalSale] = useState(0);
+  const [subTotal, setSubTotal] = useState(0);
+  const [shippingPrice, setShippingPrice] = useState(0);
+  const [finalTotal, setFinalTotal] = useState(0);
+
   const isCartEmpty = !cart || cart.length === 0;
 
-  const subTotal = isCartEmpty
-    ? 0
-    : cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const calcTotal = () => {
+    let calculatedSale = 0;
+    let calculatedSubTotal = 0;
+    let calculatedFinalTotal = 0;
 
-  const finalTotal = subTotal + shippingPrice;
+    cart.forEach((item) => {
+      const totalP = Number(item.price) * Number(item.quantity);
+      if (item.sale > 0) {
+        const discount = totalP * (item.sale / 100);
+        calculatedSale += discount;
+      }
+    });
+
+    cart.forEach((item) => {
+      const itemTotal = Number(item.price) * Number(item.quantity);
+      calculatedSubTotal += itemTotal;
+    });
+
+    calculatedFinalTotal = calculatedSubTotal - calculatedSale + shippingPrice;
+
+    setTotalSale(calculatedSale.toFixed(2));
+    setSubTotal(calculatedSubTotal.toFixed(2));
+    setFinalTotal(calculatedFinalTotal.toFixed(2));
+  };
+
+  useEffect(() => {
+    if (!isCartEmpty) {
+      calcTotal();
+    } else {
+      setTotalSale(0);
+      setSubTotal(0);
+      setFinalTotal(0);
+    }
+  }, []);
 
   return (
     <div className="w-full md:w-4/12 p-5 flex flex-col gap-4 rounded-2xl border border-gray-100 shadow-sm bg-white sticky top-4">
@@ -53,13 +86,25 @@ const PaymentMethod = () => {
           <span>Subtotal</span>
           <span className="font-semibold text-gray-900">${subTotal}</span>
         </div>
-        <div className="flex justify-between items-center text-gray-600">
+
+        {/* totalSale */}
+        {TotalSale > 0 ? (
+          <div className="flex justify-between items-center pt-3 border-t border-gray-100">
+            <span className="text-gray-500 text-sm">Sale:</span>
+            <span className="font-bold text-red-500 text-sm">
+              ${Number(TotalSale).toFixed(2)}
+            </span>
+          </div>
+        ) : null}
+
+        <div className="flex justify-between items-center pt-3 border-t border-gray-100 text-gray-600">
           <span>Shipping</span>
           <span className="text-green-500 font-semibold">
             {shippingPrice === 0 ? "Free" : `$${shippingPrice}`}
           </span>
         </div>
-        <div className="flex justify-between items-center pt-2 border-t border-gray-100">
+
+        <div className="flex justify-between items-center pt-3 border-t border-gray-100">
           <span className="font-semibold text-gray-900">Total</span>
           <span className="text-xl font-bold text-gray-900">${finalTotal}</span>
         </div>

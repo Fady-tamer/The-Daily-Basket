@@ -1,4 +1,5 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -13,7 +14,6 @@ import PaymentMethod from "./components/PaymentMethod";
 
 // Context
 import { mainStore } from "../../context/MainContext";
-import { useNavigate } from "react-router";
 
 const checkoutValidationSchema = Yup.object({
   firstName: Yup.string().trim().required("First name is required"),
@@ -45,18 +45,53 @@ const Checkout = () => {
 
   const navigateTo = useNavigate();
 
-  const shippingPrice = 0;
-  const subTotal = (cart || []).reduce(
-    (total, item) => total + item.price * item.quantity,
-    0,
-  );
-  const finalTotal = subTotal + shippingPrice;
+  const [TotalSale, setTotalSale] = useState(0);
+  const [subTotal, setSubTotal] = useState(0);
+  const [shippingPrice, setShippingPrice] = useState(0);
+  const [finalTotal, setFinalTotal] = useState(0);
+
+  const isCartEmpty = !cart || cart.length === 0;
+
+  const calcTotal = () => {
+    let calculatedSale = 0;
+    let calculatedSubTotal = 0;
+    let calculatedFinalTotal = 0;
+
+    cart.forEach((item) => {
+      const totalP = Number(item.price) * Number(item.quantity);
+      if (item.sale > 0) {
+        const discount = totalP * (item.sale / 100);
+        calculatedSale += discount;
+      }
+    });
+
+    cart.forEach((item) => {
+      const itemTotal = Number(item.price) * Number(item.quantity);
+      calculatedSubTotal += itemTotal;
+    });
+
+    calculatedFinalTotal = calculatedSubTotal - calculatedSale + shippingPrice;
+
+    setTotalSale(calculatedSale.toFixed(2));
+    setSubTotal(calculatedSubTotal.toFixed(2));
+    setFinalTotal(calculatedFinalTotal.toFixed(2));
+  };
+
+  useEffect(() => {
+    if (!isCartEmpty) {
+      calcTotal();
+    } else {
+      setTotalSale(0);
+      setSubTotal(0);
+      setFinalTotal(0);
+    }
+  }, []);
 
   const initialValues = {
     firstName: userData?.username || "",
     lastName: userData?.lastname || "",
     companyName: "",
-    streetAddress: "",
+    streetAddress: userData?.address || "",
     country: "",
     state: "",
     zipCode: "",

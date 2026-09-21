@@ -83,6 +83,7 @@ const Login = () => {
         lastname: res.data?.user?.lastname,
         email: res.data?.user?.email,
         phone: res.data?.user?.phone,
+        address: res.data?.user?.address,
       };
 
       const jwt = res.data?.jwt;

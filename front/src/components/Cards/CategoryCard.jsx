@@ -12,7 +12,7 @@ const CategoryCard = ({ documentId, name, imgUrl }) => {
       to="/shop"
       data-id={documentId}
       onClick={() => setSelectedCategory(name)}
-      className="group flex flex-col rounded-2xl shadow hover:shadow-xl transition-all duration-300 overflow-hidden bg-white border border-gray-100 hover:-translate-y-1 cursor-pointer"
+      className="group flex flex-col rounded-2xl hover:shadow-xl transition-all duration-300 overflow-hidden bg-white border border-gray-100 hover:-translate-y-1 cursor-pointer"
     >
       <div className="w-full h-36 bg-gray-50 overflow-hidden">
         <img

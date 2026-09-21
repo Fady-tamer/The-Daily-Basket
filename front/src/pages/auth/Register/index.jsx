@@ -17,7 +17,7 @@ import { CustomSuccessToast } from "../../../components/CustomToasts/CustomSucce
 import { CustomErrorToast } from "../../../components/CustomToasts/CustomErrorToast";
 
 const Register = () => {
-  const { BASE_URL, cartEndPoint, wishListEndPoint, token, saveUserData } =
+  const { BASE_URL, cartEndPoint, wishListEndPoint, token } =
     useContext(mainStore);
 
   const endPoint = "/api/auth/local/register";
@@ -59,8 +59,6 @@ const Register = () => {
   };
 
   const submitHandler = async (values, { setSubmitting }) => {
-    console.log(values);
-
     try {
       // 1. Register User
       const res = await axios.post(`${BASE_URL}${endPoint}`, {
@@ -102,9 +100,7 @@ const Register = () => {
         <Formik
           initialValues={{
             username: "",
-            lastname: "",
             email: "",
-            phone: "",
             password: "",
           }}
           validationSchema={validation}
@@ -116,30 +112,16 @@ const Register = () => {
                 Create Account
               </h1>
 
-              {/* Username & Lastname */}
-              <div className="grid grid-cols-2 gap-3 mb-1">
-                <div className="flex flex-col gap-1">
-                  <Field
-                    type="text"
-                    name="username"
-                    placeholder="First Name"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-green-500 transition-colors"
-                  />
-                  <div className="text-xs text-red-500 min-h-4 px-1">
-                    <ErrorMessage name="username" />
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-1">
-                  <Field
-                    type="text"
-                    name="lastname"
-                    placeholder="Last Name"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-green-500 transition-colors"
-                  />
-                  <div className="text-xs text-red-500 min-h-4 px-1">
-                    <ErrorMessage name="lastname" />
-                  </div>
+              {/* Username*/}
+              <div className="flex flex-col gap-1">
+                <Field
+                  type="text"
+                  name="username"
+                  placeholder="First Name"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-green-500 transition-colors"
+                />
+                <div className="text-xs text-red-500 min-h-4 px-1">
+                  <ErrorMessage name="username" />
                 </div>
               </div>
 
@@ -153,19 +135,6 @@ const Register = () => {
                 />
                 <div className="text-xs text-red-500 min-h-4 px-1">
                   <ErrorMessage name="email" />
-                </div>
-              </div>
-
-              {/* Phone Field */}
-              <div className="flex flex-col gap-1 mb-1">
-                <Field
-                  type="tel"
-                  name="phone"
-                  placeholder="Phone"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-green-500 transition-colors"
-                />
-                <div className="text-xs text-red-500 min-h-4 px-1">
-                  <ErrorMessage name="phone" />
                 </div>
               </div>
 

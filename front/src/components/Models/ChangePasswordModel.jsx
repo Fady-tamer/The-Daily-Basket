@@ -33,6 +33,7 @@ const ChangePasswordModel = ({ setIsChangingPassword }) => {
         lastname: res.data?.lastname,
         email: res.data?.email,
         phone: res.data?.phone,
+        address: res.data?.address
       };
 
       saveUserData(data);

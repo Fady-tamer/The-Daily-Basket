@@ -30,7 +30,7 @@ const Categories = () => {
 
       {/* categories */}
       {
-        <div className="pb-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {categories.map(({ documentId, name, imgUrl }) => (
             <CategoryCard
               key={documentId}
@@ -41,8 +41,6 @@ const Categories = () => {
           ))}
         </div>
       }
-
-      <div className="my-4 border-2 border-green-500 rounded-2xl" />
     </div>
   );
 };

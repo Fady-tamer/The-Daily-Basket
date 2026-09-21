@@ -9,13 +9,14 @@ import { FaTrash } from "react-icons/fa";
 import { mainStore } from "../../../context/MainContext";
 
 const CartTable = () => {
-  const { BASE_URL, cartEndPoint, token, cart, cartId, saveCartItems } =
+  const { BASE_URL, cartEndPoint, token, cart, saveCartItems } =
     useContext(mainStore);
+
+  // console.log(cart);
 
   const handleDelete = async (id, name) => {
     try {
-      const previousCart = [...cart];
-
+      const cartId = JSON.parse(localStorage.getItem("cartId"));
       const updatedCart = cart.filter((item) => item.id !== id);
 
       saveCartItems(updatedCart);
@@ -54,7 +55,7 @@ const CartTable = () => {
             </tr>
           </thead>
           <tbody>
-            {cart.map(({ id, imgUrl, name, price, quantity }) => (
+            {cart.map(({ id, imgUrl, name, price, quantity, sale }) => (
               <tr key={id} className="border-b border-[#eee] last:border-0">
                 <td className="p-4 flex justify-center items-center gap-4">
                   <img
@@ -68,11 +69,18 @@ const CartTable = () => {
                 <td className="p-4 text-center font-semibold">{quantity}</td>
 
                 <td className="p-4 text-center font-semibold text-[#aaa]">
-                  {Number(price).toFixed(2)}
+                  {sale > 0 ? (
+                    <div className="flex justify-center gap-4">
+                      <p className="line-through">{price}</p>
+                      <p>{Number(price * (1 - sale / 100)).toFixed(2)}</p>
+                    </div>
+                  ) : (
+                    price
+                  )}
                 </td>
 
                 <td className="p-4 text-center font-semibold">
-                  {Number(quantity * price).toFixed(2)}
+                  {Number(quantity * (price * (1 - sale / 100))).toFixed(2)}
                 </td>
 
                 <td className="p-4 text-center">
